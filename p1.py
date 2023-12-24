@@ -1,3 +1,7 @@
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
@@ -5,28 +9,33 @@ from langchain.chat_models import ChatOpenAI
 import streamlit as st
 import time
 import os
+from dotenv import load_dotenv
+load_dotenv()
+import openai
+import os
+openai.api_key= os.environ.get("OPENAI_API_KEY")
 
 #로컬 환경에서 내 api key로 돌릴때 
 # ---------------------------------------------------
-os.environ["OPENAI_API_KEY"] ="내 api key"
+os.environ["OPENAI_API_KEY"] = openai.api_key
 # ---------------------------------------------------
 
 #첫번째 구현 방법: Streamlit 배포할때 OpenAI API key로 돌려도 된다면 다음 코드로 배포하기
 #대신 streamlit에서 따로 api key를 추가해야합니다.
 #---------------------------------------------------
-# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+#os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #---------------------------------------------------
 
 # 두번째 구현 방법: 사용자의 api key 받아서 돌리기
 # ---------------------------------------------------
-openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+# openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-if not openai_api_key:
-    st.info("OpenAI API를 먼저 입력해주세요.")
-    st.stop()
+# if not openai_api_key:
+#     st.info("OpenAI API를 먼저 입력해주세요.")
+#     st.stop()
 
-import os
-os.environ["OPENAI_API_KEY"] = openai_api_key
+# import os
+# os.environ["OPENAI_API_KEY"] = openai_api_key
 # ---------------------------------------------------
 
 
