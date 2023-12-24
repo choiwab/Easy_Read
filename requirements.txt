@@ -1,0 +1,9 @@
+bs4
+openai
+langchain
+pypdf
+streamlit
+titoken
+faiss-cpu
+chromadb
+pysqlite3-binary
