@@ -4,6 +4,6 @@ langchain
 pypdf
 streamlit
 tiktoken
-faiss-cpu
+faiss-cpu 
 chromadb
 pysqlite3-binary
