@@ -50,7 +50,7 @@ llm = ChatOpenAI(temperature=0.2)
 from langchain.document_loaders import WebBaseLoader
 
 loader = WebBaseLoader("https://dalpha.so/ko/howtouse?scrollTo=custom")
-data = loader.load()
+data = loader.load() 
 # ---------------------------------------------------
 
 
