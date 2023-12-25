@@ -18,13 +18,13 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 #로컬 환경에서 내 api key로 돌릴때 
 # ---------------------------------------------------
-os.environ["OPENAI_API_KEY"] = openai.api_key
+#os.environ["OPENAI_API_KEY"] = openai.api_key
 # ---------------------------------------------------
 
 #첫번째 구현 방법: Streamlit 배포할때 OpenAI API key로 돌려도 된다면 다음 코드로 배포하기
-#대신 streamlit에서 따로 api key를 추가해야합니다.
+#대신 streamlit에서 따로 api key를 추가해야합니다. 
 #---------------------------------------------------
-#os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #---------------------------------------------------
 
 # 두번째 구현 방법: 사용자의 api key 받아서 돌리기
