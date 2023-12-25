@@ -3,7 +3,7 @@ openai
 langchain
 pypdf
 streamlit
-titoken
+tiktoken
 faiss-cpu
 chromadb
 pysqlite3-binary
