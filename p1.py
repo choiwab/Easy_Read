@@ -2,9 +2,9 @@
 # 배포할때에는 주석처리하시면 안됩니다. 
 # 주석처리 방법은 "Ctrl + "/"" 누르기
 # ---------------------------------------------------
-# __import__('pysqlite3')
-# import sys
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # ---------------------------------------------------
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
