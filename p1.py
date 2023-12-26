@@ -1,6 +1,11 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# 여기서부터 세줄은 로컬환경에서 돌릴 때에는(즉 웹사이트로 배포 안하고 그냥 터미널에서 돌릴때) 주석처리 해주셔야합니다. 
+# 배포할때에는 주석처리하시면 안됩니다. 
+# 주석처리 방법은 "Ctrl + "/"" 누르기
+# ---------------------------------------------------
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# ---------------------------------------------------
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
@@ -9,22 +14,28 @@ from langchain.chat_models import ChatOpenAI
 import streamlit as st
 import time
 import os
-from dotenv import load_dotenv
-load_dotenv()
-import openai
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-#print(openai.api_key)
+from langchain.chains import LLMChain
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+from langchain.utilities.dalle_image_generator import DallEAPIWrapper
+
+llm = OpenAI(temperature=0.9)
+prompt = PromptTemplate(
+    input_variables=["image_desc"],
+    template="Generate a detailed prompt to generate an image based on the following description: {image_desc}",
+)
+chain = LLMChain(llm=llm, prompt=prompt)
 
 #로컬 환경에서 내 api key로 돌릴때 
 # ---------------------------------------------------
-#os.environ["OPENAI_API_KEY"] = openai.api_key
+os.environ["OPENAI_API_KEY"] ="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"
 # ---------------------------------------------------
 
 #첫번째 구현 방법: Streamlit 배포할때 OpenAI API key로 돌려도 된다면 다음 코드로 배포하기
-#대신 streamlit에서 따로 api key를 추가해야합니다. 
+#대신 streamlit에서 따로 api key를 추가해야합니다.
 #---------------------------------------------------
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #---------------------------------------------------
 
 # 두번째 구현 방법: 사용자의 api key 받아서 돌리기
@@ -41,16 +52,16 @@ os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 
 # temperature는 0에 가까워질수록 형식적인 답변을 내뱉고, 1에 가까워질수록 창의적인 답변을 내뱉음
-llm = ChatOpenAI(temperature=0.2)
+llm = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo-1106")
 
 # 어떤 파일을 학습시키는지에 따라 코드를 바꿔주세요. ex) pdf, html, csv
 
 # 첫번째 구현 방법: 웹사이트 url 학습시키기
 # ---------------------------------------------------
-from langchain.document_loaders import WebBaseLoader
+# from langchain.document_loaders import WebBaseLoader
 
-loader = WebBaseLoader("https://dalpha.so/ko/howtouse?scrollTo=custom")
-data = loader.load() 
+# loader = WebBaseLoader("https://sosoeasyword.com/27/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=17122350&t=board")
+# data = loader.load()
 # ---------------------------------------------------
 
 
@@ -73,10 +84,10 @@ data = loader.load()
 # 먼저 VSCode에서 만든 이 폴더 내에 csv 파일을 업로드 해주셔야해요!
 # 사용하고 싶으면 아래 부분의 코드 주석을 없애주세요
 # ---------------------------------------------------
-# from langchain.document_loaders.csv_loader import CSVLoader
+from langchain.document_loaders.csv_loader import CSVLoader
 
-# loader = CSVLoader(file_path='파일이름.csv')
-# data = loader.load()
+loader = CSVLoader(file_path='instructions.csv')
+data = loader.load()
 # ---------------------------------------------------
 
 # 올린 파일 내용 쪼개기
@@ -115,7 +126,7 @@ from langchain.prompts import MessagesPlaceholder
 # AI 에이전트가 사용할 프롬프트 짜주기
 system_message = SystemMessage(
     content=(
-        "You are a nice customer service agent."
+        "You are service agent that converts complex reading material into easy read material for mentally disabled people"
         "Do your best to answer the questions."
         "Feel free to use any tools available to look up "
         "relevant information, only if necessary"
@@ -145,10 +156,10 @@ agent_executor = AgentExecutor(
 )
 
 # 웹사이트 제목
-st.title("AI 상담원")
+st.title("읽기쉬운 자료 제작 서비스")
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+# if "openai_model" not in st.session_state:
+#     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -158,7 +169,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-if prompt := st.chat_input("Dalpha AI store는 어떻게 사용하나요?"):
+if prompt := st.chat_input("읽기쉬운 자료로 변환할 글을 입력해주세요"):
 
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -176,4 +187,7 @@ if prompt := st.chat_input("Dalpha AI store는 어떻게 사용하나요?"):
             time.sleep(0.1)
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
+        image_url = DallEAPIWrapper().run(chain.run(prompt))
+        st.image(image_url)
+
     st.session_state.messages.append({"role": "assistant", "content": full_response})
