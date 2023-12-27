@@ -215,7 +215,7 @@ def process_user_input(user_input):
 
 # 웹사이트 제목
 st.title("Easy Read Generator📖")
-st.markdown("Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL")
+st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL⭐️")
 st.markdown("🌟Easy Read Material for Everyone😌")
 
 
