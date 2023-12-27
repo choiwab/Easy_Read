@@ -217,9 +217,11 @@ def process_user_input(user_input):
 st.title("Easy Read Generator📖")
 st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL⭐️")
 st.markdown("🌟Easy Read Material for Everyone😌")
-favorite_color = st.selectbox('Choose your favorite color', ['Red', 'Green', 'Blue'])
 
 st.image('easyread.jpeg')
+
+with st.expander('See explanation'):
+    st.write('Learning disability, learning disorder, or learning difficulty (British English) is a condition in the brain that causes difficulties comprehending or processing information and can be caused by several different factors.')
 
 # if "openai_model" not in st.session_state:
 #     st.session_state["openai_model"] = "gpt-3.5-turbo"
