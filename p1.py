@@ -214,7 +214,9 @@ def process_user_input(user_input):
 #     return formatted_response
 
 # 웹사이트 제목
-st.title("Easy Read Generator")
+st.title("Easy Read Generator📖")
+st.markdown("Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL")
+
 
 # if "openai_model" not in st.session_state:
 #     st.session_state["openai_model"] = "gpt-3.5-turbo"
