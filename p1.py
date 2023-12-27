@@ -220,8 +220,8 @@ st.markdown("🌟Easy Read Material for Everyone😌")
 
 st.image('easyread.jpeg')
 
-with st.expander('See explanation'):
-    st.write('Learning disability, learning disorder, or learning difficulty (British English) is a condition in the brain that causes difficulties comprehending or processing information and can be caused by several different factors.')
+with st.expander('What Is Easy Read?'):
+    st.write('‘Easy read’ refers to the presentation of text in an accessible, easy to understand format. It is often useful for people with learning disabilities, and may also be beneficial for people with other conditions affecting how they process information. More Info Here: https://www.learningdisabilities.org.uk/learning-disabilities/a-to-z/e/easy-read')
 
 # if "openai_model" not in st.session_state:
 #     st.session_state["openai_model"] = "gpt-3.5-turbo"
