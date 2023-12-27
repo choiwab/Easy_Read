@@ -217,6 +217,7 @@ def process_user_input(user_input):
 st.title("Easy Read Generator📖")
 st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL⭐️")
 st.markdown("🌟Easy Read Material for Everyone😌")
+favorite_color = st.selectbox('Choose your favorite color', ['Red', 'Green', 'Blue'])
 
 st.image('easyread.jpeg')
 
