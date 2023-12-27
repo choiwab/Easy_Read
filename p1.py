@@ -53,6 +53,9 @@ chain = LLMChain(llm=llm, prompt=prompt)
 # ---------------------------------------------------
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
+st.set_page_config(page_title="Easy Read Generator", layout="wide")
+st.title("Easy Read Generator")
+
 if not openai_api_key:
     st.info("OpenAI API를 먼저 입력해주세요.")
     st.stop()
@@ -140,19 +143,19 @@ system_message = SystemMessage(
     content=(
        # "You are service agent that converts complex reading material into easy read material for mentally disabled people"
         "You are service agent for mentally disabled people"
-        "If you are given a complex reading material, you will convert it easyily read material."
+        "If you are given a complex reading material, you will convert it easy read material."
         "If you are asked a question, you will answer in a simple manner."
         "Do your best to convert the reading material into the most simple terms"
         "Look up for the example using the tools you have"
-        "Follow these rules: "
+        "Follow these rules: "  
         "1. Write in short sentences of 15-20 words"
         "2. Skip a line for each sentence"
-        "2. Write as if you are speaking."
-        "3. Each sentence has one idea."
-        "4. Use active verbs as much as possible."
-        "5. Keep the language personal e.g. you, we "
-        "6. Use drop down bullet points to list."
-        "7. Reduce punctuation as much as you can."
+        "3. Write as if you are speaking."
+        "4. Each sentence has one idea."
+        "5. Use active verbs as much as possible."
+        "6. Keep the language personal e.g. you, we "
+        "7. Use drop down bullet points to list."
+        "8. Reduce punctuation as much as you can."
        #"Make sure to answer in Korean."
     )
 )
