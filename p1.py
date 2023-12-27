@@ -53,7 +53,7 @@ chain = LLMChain(llm=llm, prompt=prompt)
 # ---------------------------------------------------
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-st.set_page_config(page_title="Easy Read Generator", layout="wide")
+
 st.title("Easy Read Generator")
 
 if not openai_api_key:
