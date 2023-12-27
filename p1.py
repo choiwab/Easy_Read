@@ -53,9 +53,6 @@ chain = LLMChain(llm=llm, prompt=prompt)
 # ---------------------------------------------------
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-
-st.title("Easy Read Generator")
-
 if not openai_api_key:
     st.info("OpenAI API를 먼저 입력해주세요.")
     st.stop()
