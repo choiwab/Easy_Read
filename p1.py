@@ -23,7 +23,7 @@ from langchain.utilities.dalle_image_generator import DallEAPIWrapper
 from bs4 import BeautifulSoup
 import validators  # To validate URL
 import requests
-import PyPDF2
+import pypdf
 
 # import nltk
 # #nltk.download()
