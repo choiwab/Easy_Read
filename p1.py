@@ -210,7 +210,7 @@ def process_user_input(user_input):
     
 def extract_text_from_pdf(pdf_file_path):
     with open(pdf_file_path, 'rb') as file:
-        reader = PyPDF2.PdfFileReader(file)
+        reader = pypdf.PdfFileReader(file)
         num_pages = reader.numPages
         pdf_text = ''
         for page in range(num_pages):
@@ -247,7 +247,7 @@ if uploaded_file is not None:
     # Save the file locally
     with open("temp_pdf_file.pdf", "wb") as f:
         f.write(uploaded_file.getbuffer())
-    pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+    prompt = extract_text_from_pdf("temp_pdf_file.pdf")
 
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
 if prompt := st.chat_input("Enter text/URL"):
