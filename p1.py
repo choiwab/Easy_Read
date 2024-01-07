@@ -23,6 +23,7 @@ from langchain.utilities.dalle_image_generator import DallEAPIWrapper
 from bs4 import BeautifulSoup
 import validators  # To validate URL
 import requests
+import PyPDF2
 
 # import nltk
 # #nltk.download()
@@ -201,11 +202,20 @@ def scrape_text_from_url(url):
 # Function to process the user input
 def process_user_input(user_input):
     if validators.url(user_input):  # Check if input is a valid URL
-        print("333")
         return scrape_text_from_url(user_input)
+    elif user_input.endswith('.pdf'):  # Check if input is a PDF file
+        return extract_text_from_pdf(user_input)
     else:
-        print("222")
         return user_input  # Treat input as plain text
+    
+def extract_text_from_pdf(pdf_file_path):
+    with open(pdf_file_path, 'rb') as file:
+        reader = PyPDF2.PdfFileReader(file)
+        num_pages = reader.numPages
+        pdf_text = ''
+        for page in range(num_pages):
+            pdf_text += reader.getPage(page).extractText()
+    return pdf_text
 
 
 # def format_response(text):
@@ -218,13 +228,11 @@ st.title("Easy Read Generator📖")
 st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL⭐️")
 st.markdown("🌟Easy Read Material for Everyone😌")
 
-st.image('easyread.jpeg')
+st.image('easyread.jpeg') 
 
 with st.expander('What Is Easy Read?'):
     st.write('‘Easy read’ refers to the presentation of text in an accessible, easy to understand format. It is often useful for people with learning disabilities, and may also be beneficial for people with other conditions affecting how they process information. \n\n More Info Here: https://www.learningdisabilities.org.uk/learning-disabilities/a-to-z/e/easy-read')
 
-# if "openai_model" not in st.session_state:
-#     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -233,8 +241,16 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+if uploaded_file is not None:
+    # Save the file locally
+    with open("temp_pdf_file.pdf", "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+
 # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-if prompt := st.chat_input("Enter text or URL"):
+if prompt := st.chat_input("Enter text/URL"):
 
 # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기 
     st.session_state.messages.append({"role": "user", "content": prompt})
