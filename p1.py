@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 import validators  # To validate URL
 import requests
 from pypdf import PdfReader 
+from fpdf import FPDF
 
 # import nltk
 # #nltk.download()
@@ -227,7 +228,7 @@ st.image('easyread.jpeg')
 with st.expander('What Is Easy Read?'):
     st.write('‘Easy read’ refers to the presentation of text in an accessible, easy to understand format. It is often useful for people with learning disabilities, and may also be beneficial for people with other conditions affecting how they process information. \n\n More Info Here: https://www.learningdisabilities.org.uk/learning-disabilities/a-to-z/e/easy-read')
 with st.expander('What Is Learning Disability?'):
-    st.write("A learning disability, also known as a learning disorder, is a neurological condition that affects an individual's ability to acquire, process, store, and use information effectively. These disabilities can manifest in various ways and can impact an individual's performance in one or more areas of learning, such as reading, writing, mathematics, or problem-solving. Learning disabilities are typically present from childhood and often persist into adulthood.")
+    st.write("A learning disability, also known as a learning disorder, is a neurological condition that affects an individual's ability to acquire, process, store, and use information effectively. These disabilities can manifest in various ways and can impact an individual's performance in one or more areas of learning, such as reading, writing, mathematics, or problem-solving. Learning disabilities are typically present from childhood and often persist into adulthood. \n\n Find out more here: https://www.mencap.org.uk/learning-disability-explained/what-learning-disability#:~:text=A%20learning%20disability%20is%20to,someone%20for%20their%20whole%20life.")
 with st.expander('How Many People Have Learning Disabilities?'):
     st.write('At least 1 in every 59 children has one or several learning disabilities and 1 in 5 children in the U.S. have learning and thinking differences such as ADHD or Dyslexia')
 with st.expander('How Can I Use this Website?'):
@@ -288,3 +289,29 @@ if prompt:
         
 
      st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+def create_pdf(text, image_path):
+    pdf = FPDF()
+    pdf.add_page()
+
+    # Add text
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, text)
+
+    # Add image
+    pdf.image(image_path, x=10, y=pdf.get_y(), w=100)  # Adjust dimensions as needed
+
+    pdf_output = "output.pdf"
+    pdf.output(pdf_output)
+    return pdf_output
+
+pdf_file = create_pdf(full_response, 'path_to_image.jpg') # Replace with your image path
+
+with open(pdf_file, "rb") as file:
+    st.download_button(
+        label="Download PDF",
+        data=file,
+        file_name="easy_read_output.pdf",
+        mime="application/octet-stream"
+    )
