@@ -244,6 +244,7 @@ if uploaded_file is not None:
 
 
 user_input = st.chat_input("Enter text/URL")
+
 if user_input:
     prompt = user_input
     st.session_state.messages.append({"role": "user", "content": prompt})
