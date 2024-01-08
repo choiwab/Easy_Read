@@ -55,7 +55,7 @@ chain = LLMChain(llm=llm, prompt=prompt)
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
 if not openai_api_key:
-    st.info("OpenAI API를 먼저 입력해주세요.")
+    st.info("Enter OPENAI API Key")
     st.stop()
 
 import os
@@ -180,18 +180,13 @@ agent_executor = AgentExecutor(
 # Function to scrape text from a URL
 def scrape_text_from_url(url):
     try:
-        print("111")
         response = requests.get(url)
-        print("111111")
         if response.status_code == 200:
-            print("2")
             soup = BeautifulSoup(response.content, 'html.parser')
             return ' '.join(p.get_text().strip() for p in soup.find_all('p'))
         else:
-            print("3")
             return "Failed to retrieve content from URL."
     except Exception as e:
-        print("4")
         return f"An error occurred: {e}"
 
 # from langchain.document_loaders import WebBaseLoader
@@ -259,7 +254,6 @@ elif pdf_text:
     prompt = pdf_text
 else:
     prompt = None
-
 
 if prompt:
      prompt = process_user_input(prompt)
