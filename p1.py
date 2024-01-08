@@ -227,37 +227,32 @@ st.image('easyread.jpeg')
 with st.expander('What Is Easy Read?'):
     st.write('‘Easy read’ refers to the presentation of text in an accessible, easy to understand format. It is often useful for people with learning disabilities, and may also be beneficial for people with other conditions affecting how they process information. \n\n More Info Here: https://www.learningdisabilities.org.uk/learning-disabilities/a-to-z/e/easy-read')
 
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Container for the file uploader and text input
-with st.container():
-    uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
-    pdf_text = None 
-    if uploaded_file is not None: 
-        # Save the file locally 
-        with open("temp_pdf_file.pdf", "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-    user_input = st.chat_input("Enter text/URL")
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+pdf_text = None 
+if uploaded_file is not None: 
+    # Save the file locally
+    with open("temp_pdf_file.pdf", "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
 
-# Process input
+
+user_input = st.chat_input("Enter text/URL")
 if user_input:
     prompt = user_input
     st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 elif pdf_text:
     prompt = pdf_text
 else:
     prompt = None
-
-# Display messages
-for message in st.session_state.messages:
-    with st.container():
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
 
 if prompt:
      prompt = process_user_input(prompt)
