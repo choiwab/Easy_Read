@@ -25,12 +25,13 @@ import validators  # To validate URL
 import requests
 from pypdf import PdfReader 
 from fpdf import FPDF
+import sys
+print("Python executable:", sys.executable)
 
 # import nltk
 # #nltk.download()
 # nltk.download('punkt')
 # from nltk.tokenize import sent_tokenize
-
 
 llm = OpenAI(temperature=0.1)
 prompt = PromptTemplate(
