@@ -231,30 +231,33 @@ with st.expander('What Is Easy Read?'):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
-pdf_text = None 
-if uploaded_file is not None: 
-    # Save the file locally
-    with open("temp_pdf_file.pdf", "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+# Container for the file uploader and text input
+with st.container():
+    uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+    pdf_text = None 
+    if uploaded_file is not None: 
+        # Save the file locally 
+        with open("temp_pdf_file.pdf", "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
 
+    user_input = st.chat_input("Enter text/URL")
 
-user_input = st.chat_input("Enter text/URL")
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
+# Process input
 if user_input:
     prompt = user_input
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
 elif pdf_text:
     prompt = pdf_text
 else:
     prompt = None
+
+# Display messages
+for message in st.session_state.messages:
+    with st.container():
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
 
 if prompt:
      prompt = process_user_input(prompt)
