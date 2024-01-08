@@ -23,7 +23,7 @@ from langchain.utilities.dalle_image_generator import DallEAPIWrapper
 from bs4 import BeautifulSoup
 import validators  # To validate URL
 import requests
-import pypdf
+from pypdf import PdfReader 
 
 # import nltk
 # #nltk.download()
@@ -203,20 +203,19 @@ def scrape_text_from_url(url):
 def process_user_input(user_input):
     if validators.url(user_input):  # Check if input is a valid URL
         return scrape_text_from_url(user_input)
-    elif user_input.endswith('.pdf'):  # Check if input is a PDF file
-        return extract_text_from_pdf(user_input)
+    # elif user_input.endswith('.pdf'):  # Check if input is a PDF file
+    #     return extract_text_from_pdf(user_input)
     else:
         return user_input  # Treat input as plain text
     
 def extract_text_from_pdf(pdf_file_path):
     with open(pdf_file_path, 'rb') as file:
-        reader = pypdf.PdfFileReader(file)
-        num_pages = reader.numPages
+        reader = PdfReader(file)
+        num_pages = len(reader.pages)
         pdf_text = ''
-        for page in range(num_pages):
-            pdf_text += reader.getPage(page).extractText()
+        for page in reader.pages:
+            pdf_text += page.extract_text()
     return pdf_text
-
 
 # def format_response(text):
 #     sentences = sent_tokenize(text)
