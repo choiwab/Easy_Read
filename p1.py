@@ -226,6 +226,12 @@ st.image('easyread.jpeg')
 
 with st.expander('What Is Easy Read?'):
     st.write('‘Easy read’ refers to the presentation of text in an accessible, easy to understand format. It is often useful for people with learning disabilities, and may also be beneficial for people with other conditions affecting how they process information. \n\n More Info Here: https://www.learningdisabilities.org.uk/learning-disabilities/a-to-z/e/easy-read')
+with st.expander('What Is Learning Disability?'):
+    st.write("A learning disability, also known as a learning disorder, is a neurological condition that affects an individual's ability to acquire, process, store, and use information effectively. These disabilities can manifest in various ways and can impact an individual's performance in one or more areas of learning, such as reading, writing, mathematics, or problem-solving. Learning disabilities are typically present from childhood and often persist into adulthood.")
+with st.expander('How Many People Have Learning Disabilities?'):
+    st.write('At least 1 in every 59 children has one or several learning disabilities and 1 in 5 children in the U.S. have learning and thinking differences such as ADHD or Dyslexia')
+with st.expander('How Can I Use this Website?'):
+    st.write('This platform is designed for both educational purposes and to assist individuals with learning disabilities in simplifying essential information for their everyday needs.')
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -282,4 +288,3 @@ if prompt:
         
 
      st.session_state.messages.append({"role": "assistant", "content": full_response})
-uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
