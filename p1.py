@@ -31,7 +31,7 @@ from pypdf import PdfReader
 # from nltk.tokenize import sent_tokenize
 
 
-llm = OpenAI(temperature=0.9)
+llm = OpenAI(temperature=0.1)
 prompt = PromptTemplate(
     input_variables=["image_desc"],
     template="Generate a concise prompt to generate an image based on the following description and make sure to include a instruction to not include text in the image: {image_desc}",
@@ -279,8 +279,9 @@ if prompt:
         image_url = DallEAPIWrapper().run(image_prompt)
         st.image(image_url)
 
-     st.session_state.messages.append({"role": "assistant", "content": full_response})
+        
 
+     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
 
