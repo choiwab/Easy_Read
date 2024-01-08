@@ -248,9 +248,13 @@ if uploaded_file is not None:
     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
 
 
+
 user_input = st.chat_input("Enter text/URL")
 if user_input:
     prompt = user_input
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 elif pdf_text:
     prompt = pdf_text
 else:
@@ -258,10 +262,6 @@ else:
 
 
 if prompt:
-     st.session_state.messages.append({"role": "user", "content": prompt})
-     with st.chat_message("user"):
-        st.markdown(prompt)
-
      prompt = process_user_input(prompt)
 
 # AI가 보낸 답변이면 AI 아이콘이랑 LLM 실행시켜서 답변 받고 스트리밍해서 보여주기
