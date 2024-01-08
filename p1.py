@@ -231,13 +231,9 @@ with st.expander('What Is Easy Read?'):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 pdf_text = None 
-if uploaded_file is not None:
+if uploaded_file is not None: 
     # Save the file locally
     with open("temp_pdf_file.pdf", "wb") as f:
         f.write(uploaded_file.getbuffer())
@@ -245,6 +241,11 @@ if uploaded_file is not None:
 
 
 user_input = st.chat_input("Enter text/URL")
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
 if user_input:
     prompt = user_input
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -282,39 +283,3 @@ if prompt:
         
 
      st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-
-
-
-# # 웹사이트에서 유저의 인풋을 받고 위에서 만든 AI 에이전트 실행시켜서 답변 받기
-# if prompt := st.chat_input("Enter text/URL"):
-
-# # 유저가 보낸 질문이면 유저 아이콘과 질문 보여주기 
-#     st.session_state.messages.append({"role": "user", "content": prompt})
-#     with st.chat_message("user"):
-#         st.markdown(prompt)
-
-#     prompt = process_user_input(prompt)
-
-# # AI가 보낸 답변이면 AI 아이콘이랑 LLM 실행시켜서 답변 받고 스트리밍해서 보여주기
-#     with st.chat_message("assistant"):
-#         message_placeholder = st.empty()
-#         full_response = ""
-#         result = agent_executor({"input": prompt})
-
-#         for chunk in result["output"].split():
-#             #full_response += chunk + " "
-#             full_response += chunk.replace('.', '.\n\n') + " " 
-#             time.sleep(0.1) 
-#             message_placeholder.markdown(full_response + "▌") 
-#         message_placeholder.markdown(full_response) 
-#         #      full_response += chunk + " "
-#         #      formatted_response = format_response(full_response)
-#         #      time.sleep(0.1)
-#         #      message_placeholder.markdown(formatted_response + "▌")
-#         # message_placeholder.markdown(formatted_response)
-#         image_prompt = chain.run(result["output"])
-#         image_url = DallEAPIWrapper().run(image_prompt)
-#         st.image(image_url)
-
-#     st.session_state.messages.append({"role": "assistant", "content": full_response})
