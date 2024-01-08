@@ -25,8 +25,6 @@ import validators  # To validate URL
 import requests
 from pypdf import PdfReader 
 from fpdf import FPDF
-import sys
-print("Python executable:", sys.executable)
 
 # import nltk
 # #nltk.download()
