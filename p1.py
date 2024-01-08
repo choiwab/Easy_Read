@@ -236,12 +236,12 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+pdf_text = None 
 if uploaded_file is not None:
     # Save the file locally
     with open("temp_pdf_file.pdf", "wb") as f:
         f.write(uploaded_file.getbuffer())
     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
-
 
 
 user_input = st.chat_input("Enter text/URL")
