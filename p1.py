@@ -34,7 +34,7 @@ from pypdf import PdfReader
 llm = OpenAI(temperature=0.1)
 prompt = PromptTemplate(
     input_variables=["image_desc"],
-    template="Generate a concise prompt to generate an image based on the following description and make sure to include a instruction to not include text in the image: {image_desc}",
+    template="Create an image that precisely illustrates '{image_desc}'. Ensure the image contains no text or writing of any kind.",
 )
 chain = LLMChain(llm=llm, prompt=prompt)
 
