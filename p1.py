@@ -282,3 +282,4 @@ if prompt:
         
 
      st.session_state.messages.append({"role": "assistant", "content": full_response})
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
