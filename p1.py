@@ -1,8 +1,6 @@
-# ---------------------------------------------------
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-# ---------------------------------------------------
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
@@ -221,6 +219,7 @@ def create_pdf(text, image_url):
     # Make sure the DejaVuSansCondensed.ttf file is in your project directory or provide the correct path
     pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
     pdf.set_font('DejaVu', size=12)
+    pdf.multi_cell(0, 10, text)
 
     # Add image
     image_path = download_image(image_url)
@@ -267,13 +266,47 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+# uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+# pdf_text = None 
+# if uploaded_file is not None: 
+#     # Save the file locally
+#     with open("temp_pdf_file.pdf", "wb") as f:
+#         f.write(uploaded_file.getbuffer())
+#     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+        
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 pdf_text = None 
+
 if uploaded_file is not None: 
-    # Save the file locally
-    with open("temp_pdf_file.pdf", "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
+    # Use a PDF processing library to read from the file-like object
+    try:
+        reader = PdfReader(uploaded_file)
+        pdf_text = ''
+        for page in reader.pages:
+            pdf_text += page.extract_text() + '\n'
+    except Exception as e:
+        st.error(f"An error occurred while processing the PDF: {e}")
+
+# if 'last_processed_input' not in st.session_state:
+#     st.session_state.last_processed_input = None
+#     st.session_state.generated_text = None
+#     st.session_state.generated_image_url = None
+
+# uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+
+# if uploaded_file is not None:
+#     # Read the uploaded file
+#     pdf_text = extract_text_from_pdf(uploaded_file)
+
+#     # Check if the input has changed
+#     if pdf_text != st.session_state.last_processed_input:
+#         # Process the new input
+#         processed_text, image_url = process_input_with_llm(pdf_text) 
+        
+#         # Update session state
+#         st.session_state.last_processed_input = pdf_text
+#         st.session_state.generated_text = processed_text
+#         st.session_state.generated_image_url = image_url
 
 
 user_input = st.chat_input("Enter text/URL")
