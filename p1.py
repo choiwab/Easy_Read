@@ -1,6 +1,3 @@
-# 여기서부터 세줄은 로컬환경에서 돌릴 때에는(즉 웹사이트로 배포 안하고 그냥 터미널에서 돌릴때) 주석처리 해주셔야합니다. 
-# 배포할때에는 주석처리하시면 안됩니다. 
-# 주석처리 방법은 "Ctrl + "/"" 누르기
 # ---------------------------------------------------
 __import__('pysqlite3')
 import sys
@@ -25,6 +22,9 @@ import validators  # To validate URL
 import requests
 from pypdf import PdfReader 
 from fpdf import FPDF
+from io import BytesIO
+from PIL import Image
+
 
 # import nltk
 # #nltk.download()
@@ -34,7 +34,7 @@ from fpdf import FPDF
 llm = OpenAI(temperature=0.1)
 prompt = PromptTemplate(
     input_variables=["image_desc"],
-    template="Create an image that precisely illustrates '{image_desc}'. Ensure the image contains no text or writing of any kind.",
+    template="Create a concise prompt for an textless image that illustrates '{image_desc}'. Include in the prompt to not contain text or writing of any kind.",
 )
 chain = LLMChain(llm=llm, prompt=prompt)
 
@@ -212,6 +212,30 @@ def extract_text_from_pdf(pdf_file_path):
             pdf_text += page.extract_text()
     return pdf_text
 
+def create_pdf(text, image_url):
+    pdf = FPDF()
+    pdf.add_page()
+
+    # Add text
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, text)
+
+    # Add image
+    image_path = download_image(image_url)
+    pdf.image(image_path, x=10, y=pdf.get_y(), w=100)  # Adjust dimensions as needed
+
+    pdf_output = "output.pdf"
+    pdf.output(pdf_output)
+    return pdf_output
+
+def download_image(image_url):
+    response = requests.get(image_url)
+    image = Image.open(BytesIO(response.content))
+    image_path = 'temp_image.jpg'  # Temporary file path
+    image.save(image_path)
+    return image_path
+
+
 # def format_response(text):
 #     sentences = sent_tokenize(text)
 #     formatted_response = '\n\n'.join(sentences)
@@ -261,6 +285,9 @@ elif pdf_text:
 else:
     prompt = None
 
+full_response = ""
+image_url = ""
+
 if prompt:
      prompt = process_user_input(prompt)
 
@@ -282,35 +309,21 @@ if prompt:
         #      message_placeholder.markdown(formatted_response + "▌")
         # message_placeholder.markdown(formatted_response)
         image_prompt = chain.run(result["output"])
+        print(result["output"])
+        print(image_prompt)
         image_url = DallEAPIWrapper().run(image_prompt)
+        print(image_prompt)
         st.image(image_url)
 
-        
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-     st.session_state.messages.append({"role": "assistant", "content": full_response})
+        pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
 
-
-def create_pdf(text, image_path):
-    pdf = FPDF()
-    pdf.add_page()
-
-    # Add text
-    pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, text)
-
-    # Add image
-    pdf.image(image_path, x=10, y=pdf.get_y(), w=100)  # Adjust dimensions as needed
-
-    pdf_output = "output.pdf"
-    pdf.output(pdf_output)
-    return pdf_output
-
-pdf_file = create_pdf(full_response, 'path_to_image.jpg') # Replace with your image path
-
-with open(pdf_file, "rb") as file:
-    st.download_button(
-        label="Download PDF",
-        data=file,
-        file_name="easy_read_output.pdf",
-        mime="application/octet-stream"
+        with open(pdf_file, "rb") as file:
+            st.download_button(
+            label="Download PDF",
+            data=file,
+            file_name="easy_read_output.pdf",
+            mime="application/octet-stream"
     )
+ 
