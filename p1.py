@@ -22,6 +22,7 @@ from pypdf import PdfReader
 from fpdf import FPDF
 from io import BytesIO
 from PIL import Image
+import streamlit as st
 
 
 # import nltk
@@ -237,6 +238,10 @@ def download_image(image_url):
     image.save(image_path)
     return image_path
 
+def reset_processing_state():
+    # Reset the processing state for a new upload
+    st.session_state.file_processed = False
+    st.session_state.uploaded_file = None
 
 # def format_response(text):
 #     sentences = sent_tokenize(text)
@@ -273,9 +278,21 @@ for message in st.session_state.messages:
 #     with open("temp_pdf_file.pdf", "wb") as f:
 #         f.write(uploaded_file.getbuffer())
 #     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
-        
+
+
+# Initialize session state variables if they don't exist
+if 'file_processed' not in st.session_state:
+    st.session_state.file_processed = False
+if 'uploaded_file' not in st.session_state:
+    st.session_state.uploaded_file = None
+
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 pdf_text = None 
+
+# Update the session state uploaded_file
+if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
+    st.session_state.uploaded_file = uploaded_file
+    st.session_state.file_processed = False
 
 if uploaded_file is not None: 
     # Use a PDF processing library to read from the file-like object
@@ -353,13 +370,16 @@ if prompt:
 
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-        pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+        if uploaded_file is not None and not st.session_state.file_processed:
+            pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+            st.session_state.file_processed = True
 
-        with open(pdf_file, "rb") as file:
-            st.download_button(
-            label="Download PDF",
-            data=file,
-            file_name="easy_read_output.pdf",
-            mime="application/octet-stream"
-    )
+            with open(pdf_file, "rb") as file:
+                st.download_button(
+                label="Download PDF",
+                data=file,
+                file_name="easy_read_output.pdf",
+                mime="application/octet-stream"
+                on_click=reset_processing_state
+        )
  
