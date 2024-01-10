@@ -347,8 +347,8 @@ if prompt:
                     pdf_text += page.extract_text() + '\n'
             except Exception as e:
                 st.error(f"An error occurred while processing the PDF: {e}")
-                pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
-                st.session_state.file_processed = True
+            pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+            st.session_state.file_processed = True
             with open(pdf_file, "rb") as file:
                 st.download_button(
                 label="Download PDF",
