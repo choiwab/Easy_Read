@@ -379,7 +379,7 @@ if prompt:
                 label="Download PDF",
                 data=file,
                 file_name="easy_read_output.pdf",
-                mime="application/octet-stream"
+                mime="application/octet-stream",
                 on_click=reset_processing_state
         )
  
