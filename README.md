@@ -1,24 +1,24 @@
-<Easy Read Generator for Mentally Disabled Patients>
-  
-**Introduction**
-The Easy Read Generator is a groundbreaking project aimed at raising awareness and supporting mentally disabled patients. This tool uses advanced technology to transform complex texts into easily understandable formats, promoting inclusivity and accessibility in information dissemination.
+# Easy Read Generator for Mentally Disabled Patients 📘🌟
 
-**Features**
-- Generates Easy-to-Read Material: Adapts complex texts into simpler versions based on guidelines from People First New Zealand Inc. for clear comprehension.
-- Interactive Conversations: Capable of holding conversations, addressing queries, and handling various text inputs, including URLs and PDFs.
-- Image Generation: Utilizes DALL-E API to create visual representations of text content.
-- PDF Download: Allows users to download a PDF file of the simplified text and corresponding image, adhering to easy-read material standards.
-  
-**Technology Stack**
-Programming Language: Python
-Frameworks and APIs: LangChain, GPT API, Streamlit, DALL-E API
+## ⭐️ Introduction
+Welcome to the **Easy Read Generator**! 🚀 This innovative project is all about supporting mentally disabled patients by transforming complex texts into friendly, easy-to-understand formats. We're using cutting-edge technology to bring inclusivity and accessibility to information dissemination. Let's make the world a brighter place together!
 
-**Access and Usage**
-- Link to Application: Easy Read Generator
-- Note: An OpenAI API Key is required for service access.
-  
-**Background and Mission**
-This project is dedicated to using technology for social good, specifically to assist mentally disabled patients. By simplifying and visualizing information, the Easy Read Generator aims to make knowledge more accessible and foster greater understanding.
+## ✨ Features
+- **Generates Easy-to-Read Material:** 📖 Transforms texts into simpler versions, inspired by People First New Zealand Inc. guidelines.
+- **Interactive Conversations:** 💬 Engages in dialogues, answers queries, and processes various inputs including URLs and PDFs.
+- **Image Generation:** 🎨 Creates visually appealing representations of texts using the DALL-E API.
+- **PDF Download:** 📥 Offers easy downloading of the simplified text and images, all in an easy-read friendly format.
 
-**Contributions**
-We welcome contributions and suggestions to enhance the functionality and reach of this project. Your support can help us make a significant impact in the lives of mentally disabled individuals through technology.
+## 🛠️ Technology Stack
+- **Programming Language:** Python 🐍
+- **Frameworks and APIs:** LangChain, GPT API, Streamlit, DALL-E API
+
+## 🔗 Access and Usage
+- **Check it out here:** [Easy Read Generator](https://easyread-mpmn4dn5gvyu77x6k6nqq5.streamlit.app/) (Note: OpenAI API Key required)
+
+## 💖 Background and Mission
+I am passionate about using technology for social good! Our mission is to make information more accessible and understandable for mentally disabled patients. Join me in spreading knowledge and awareness!
+
+## 🤝 How to Contribute
+Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fix, or a feature enhancement, your input can make a huge difference in the lives of many. Let's innovate together for a more inclusive world!
+
