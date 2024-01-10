@@ -33,7 +33,7 @@ import streamlit as st
 llm = OpenAI(temperature=0.1)
 prompt = PromptTemplate(
     input_variables=["image_desc"],
-    template="Create a concise prompt for an textless image that illustrates '{image_desc}'. Include in the prompt to not contain text or writing of any kind.",
+    template="Create a concise prompt for an textless image that illustrates '{image_desc}'. Please include in the prompt to not contain text or writing of any kind.",
 )
 chain = LLMChain(llm=llm, prompt=prompt)
 
@@ -283,7 +283,7 @@ pdf_text = None
 # Update the session state uploaded_file
 if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
     st.session_state.uploaded_file = uploaded_file
-    st.session_state.file_processed = False
+    st.session_state.file_processed = True
     try:
         reader = PdfReader(uploaded_file)
         pdf_text = ''
