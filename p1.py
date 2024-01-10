@@ -213,7 +213,7 @@ def create_pdf(text, image_url):
 
     # Add image
     image_path = download_image(image_url)
-    pdf.image(image_path, x=10, y=pdf.get_y(), w=200)  # Adjust dimensions as needed
+    pdf.image(image_path, x=10, y=pdf.get_y(), w=100)  # Adjust dimensions as needed
 
     pdf_output = "output.pdf"
     pdf.output(pdf_output)
@@ -272,7 +272,6 @@ pdf_text = None
 
 #Update the session state uploaded_file
 if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
-#if st.session_state.upload_processed and not st.session_state.pdf_generated:
     st.session_state.uploaded_file = uploaded_file
     st.session_state.file_processed = True
     try:
@@ -336,7 +335,7 @@ if prompt:
 
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-        pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+        pdf_file = create_pdf(full_response, image_url) 
         st.session_state.file_processed = True
         with open(pdf_file, "rb") as file:
                 st.download_button(
