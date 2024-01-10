@@ -7,5 +7,5 @@ streamlit
 tiktoken
 faiss-cpu 
 chromadb
-pysqlite3-binary=
+pysqlite3-binary
 requests

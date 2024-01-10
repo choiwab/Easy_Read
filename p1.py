@@ -218,12 +218,12 @@ def create_pdf(text, image_url):
     # Add a Unicode-compatible font
     # Make sure the DejaVuSansCondensed.ttf file is in your project directory or provide the correct path
     pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
-    pdf.set_font('DejaVu', size=12)
+    pdf.set_font('DejaVu', size=15)
     pdf.multi_cell(0, 10, text)
 
     # Add image
     image_path = download_image(image_url)
-    pdf.image(image_path, x=10, y=pdf.get_y(), w=100)  # Adjust dimensions as needed
+    pdf.image(image_path, x=10, y=pdf.get_y(), w=200)  # Adjust dimensions as needed
 
     pdf_output = "output.pdf"
     pdf.output(pdf_output)
