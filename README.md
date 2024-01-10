@@ -22,3 +22,9 @@ I am passionate about using technology for social good! My mission is to make in
 ## 🤝 How to Contribute
 Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fix, or a feature enhancement, your input can make a huge difference in the lives of many. Let's innovate together for a more inclusive world!
 
+## Screenshots 📸
+1. [Hompage](/Screenshots/1.homepage.png) 
+2. [Choose_Input](/Screenshots/choose_input.png)
+3. [Copy&paste_input](/Screenshots/paste_input.png)
+4. [Image_Generated](/Screenshots/image.png)
+5. [Download_pdf](/Screenshots/pdf.png)
