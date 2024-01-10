@@ -23,8 +23,23 @@ I am passionate about using technology for social good! My mission is to make in
 Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fix, or a feature enhancement, your input can make a huge difference in the lives of many. Let's innovate together for a more inclusive world!
 
 ## Screenshots 📸
-1. [Hompage](/Screenshots/1homepage.jpg) 
+<!-- 1. [Hompage](/Screenshots/1homepage.jpg) 
 2. [Choose_Input](/Screenshots/2choose_input.png)
 3. [Copy&paste_input](/Screenshots/3paste_input.png)
 4. [Image_Generated](/Screenshots/4image.png)
-5. [Download_pdf](/Screenshots/5pdf.png)
+5. [Download_pdf](/Screenshots/5pdf.png) -->
+## Screenshots 📸
+1. Homepage
+   <img src="/Screenshots/1homepage.png" alt="Homepage">
+
+2. Choose_Input
+   <img src="/Screenshots/2choose_input.png" alt="Choose Input">
+
+3. Copy&paste_input
+   <img src="/Screenshots/3paste_input.png" alt="Copy & Paste Input">
+
+4. Image_Generated
+   <img src="/Screenshots/4image.png" alt="Image Generated">
+
+5. Download_pdf
+   <img src="/Screenshots/5pdf.png" alt="Download PDF">
