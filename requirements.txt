@@ -1,4 +1,3 @@
-fpdf
 bs4
 openai
 langchain
@@ -8,4 +7,5 @@ tiktoken
 faiss-cpu 
 chromadb
 pysqlite3-binary
+fpdf
 requests
