@@ -24,16 +24,16 @@ Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fi
 
 ## Screenshots 📸
 1. Homepage (Expanders with Information about Easy Read Material and Mental Disability)
-   <img src="/Screenshots/1homepage.png" alt="Homepage" width="200" height="150">
+   <img src="/Screenshots/1homepage.png" alt="Homepage" width="800" height="600">
 
 2. Choose_Input (Text/URL/PDF) (URL in this case)
-   <img src="/Screenshots/2choose_input.png" alt="Choose Input" width="200" height="150">
+   <img src="/Screenshots/2choose_input.png" alt="Choose Input" width="800" height="600">
 
 3. Copy&paste_input (For PDF, drag or browse file)
-   <img src="/Screenshots/3paste_input.png" alt="Copy & Paste Input" width="200" height="150">
+   <img src="/Screenshots/3paste_input.png" alt="Copy & Paste Input" width="800" height="600">
 
 4. Image_Generated
-   <img src="/Screenshots/4image.png" alt="Image Generated" width="200" height="150">
+   <img src="/Screenshots/4image.png" alt="Image Generated" width="800" height="600">
 
 5. Download_pdf
-   <img src="/Screenshots/5pdf.png" alt="Download PDF" width="200" height="150">
+   <img src="/Screenshots/5pdf.png" alt="Download PDF" width="800" height="600">
