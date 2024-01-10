@@ -285,14 +285,13 @@ if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file
     st.session_state.uploaded_file = uploaded_file
     st.session_state.file_processed = False
 
-if uploaded_file is not None and not st.session_state.file_processed: 
-    # Use a PDF processing library to read from the file-like object
-    try:
+
+try:
         reader = PdfReader(uploaded_file)
         pdf_text = ''
         for page in reader.pages:
             pdf_text += page.extract_text() + '\n'
-    except Exception as e:
+except Exception as e:
         st.error(f"An error occurred while processing the PDF: {e}")
 
 
