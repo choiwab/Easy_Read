@@ -285,6 +285,16 @@ if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file
     st.session_state.uploaded_file = uploaded_file
     st.session_state.file_processed = False
 
+if uploaded_file is not None and not st.session_state.file_processed: 
+    # Use a PDF processing library to read from the file-like object
+    try:
+        reader = PdfReader(uploaded_file)
+        pdf_text = ''
+        for page in reader.pages:
+            pdf_text += page.extract_text() + '\n'
+    except Exception as e:
+        st.error(f"An error occurred while processing the PDF: {e}")
+
 
 # uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 # pdf_text = None 
@@ -339,17 +349,9 @@ if prompt:
 
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-        if uploaded_file is not None and not st.session_state.file_processed:
-            try:
-                reader = PdfReader(uploaded_file)
-                pdf_text = ''
-                for page in reader.pages:
-                    pdf_text += page.extract_text() + '\n'
-            except Exception as e:
-                st.error(f"An error occurred while processing the PDF: {e}")
-            pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
-            st.session_state.file_processed = True
-            with open(pdf_file, "rb") as file:
+        pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+        st.session_state.file_processed = True
+        with open(pdf_file, "rb") as file:
                 st.download_button(
                 label="Download PDF",
                 data=file,
@@ -358,12 +360,3 @@ if prompt:
                 on_click=reset_processing_state
         )
  
-# if uploaded_file is not None and not st.session_state.file_processed: 
-#     # Use a PDF processing library to read from the file-like object
-#     try:
-#         reader = PdfReader(uploaded_file)
-#         pdf_text = ''
-#         for page in reader.pages:
-#             pdf_text += page.extract_text() + '\n'
-#     except Exception as e:
-#         st.error(f"An error occurred while processing the PDF: {e}")
