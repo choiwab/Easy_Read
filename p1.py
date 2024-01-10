@@ -269,16 +269,17 @@ uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 pdf_text = None 
 
 # Update the session state uploaded_file
-if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
-    st.session_state.uploaded_file = uploaded_file
-    st.session_state.file_processed = True
-    try:
-        reader = PdfReader(uploaded_file)
-        pdf_text = ''
-        for page in reader.pages:
-            pdf_text += page.extract_text() + '\n'
-    except Exception as e:
-        st.error(f"An error occurred while processing the PDF: {e}")
+# if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
+#if st.session_state.upload_processed and not st.session_state.pdf_generated:
+    #st.session_state.uploaded_file = uploaded_file
+    #st.session_state.file_processed = True
+try:
+    reader = PdfReader(uploaded_file)
+    pdf_text = ''
+    for page in reader.pages:
+        pdf_text += page.extract_text() + '\n'
+except Exception as e:
+    st.error(f"An error occurred while processing the PDF: {e}")
 
 # Save the file uploaded locally 
 # uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
@@ -341,6 +342,8 @@ if prompt:
                 data=file,
                 file_name="easy_read_output.pdf",
                 mime="application/octet-stream",
-                on_click=reset_processing_state
+                #on_click=reset_processing_state
         )
+        #st.session_state.pdf_generated = True 
+        st.session_state.pop('file_uploader', None)
  
