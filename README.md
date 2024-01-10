@@ -33,7 +33,7 @@ Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fi
    <img src="/Screenshots/3paste_input.png" alt="Copy & Paste Input" width="800" height="600">
 
 4. Image_Generated
-   <img src="/Screenshots/4image.png" alt="Image Generated" width="800" height="600">
+   <img src="/Screenshots/4image.png" alt="Image Generated" width="1000" height="800">
 
 5. Download_pdf
-   <img src="/Screenshots/5pdf.png" alt="Download PDF" width="800" height="600">
+   <img src="/Screenshots/5pdf.png" alt="Download PDF" width="1000" height="800">
