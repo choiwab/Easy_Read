@@ -38,18 +38,14 @@ prompt = PromptTemplate(
 chain = LLMChain(llm=llm, prompt=prompt)
 
 
-#로컬 환경에서 내 api key로 돌릴때 
 # ---------------------------------------------------
 #os.environ["OPENAI_API_KEY"] ="" 
 # ---------------------------------------------------
 
-#첫번째 구현 방법: Streamlit 배포할때 OpenAI API key로 돌려도 된다면 다음 코드로 배포하기
-#대신 streamlit에서 따로 api key를 추가해야합니다.
 #---------------------------------------------------
 # os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #---------------------------------------------------
 
-# 두번째 구현 방법: 사용자의 api key 받아서 돌리기
 # ---------------------------------------------------
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
@@ -65,9 +61,7 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 # temperature는 0에 가까워질수록 형식적인 답변을 내뱉고, 1에 가까워질수록 창의적인 답변을 내뱉음
 llm = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo-1106")
 
-# 어떤 파일을 학습시키는지에 따라 코드를 바꿔주세요. ex) pdf, html, csv
-
-# 첫번째 구현 방법: 웹사이트 url 학습시키기
+# 웹사이트 url 학습시키기
 # ---------------------------------------------------
 # from langchain.document_loaders import WebBaseLoader
 
@@ -76,9 +70,7 @@ llm = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo-1106")
 # ---------------------------------------------------
 
 
-# 두번째 구현 방법: pdf 학습시키기
-# 먼저 VSCode에서 만든 이 폴더 내에 pdf 파일을 업로드 해주셔야해요!
-# 사용하고 싶으면 아래 부분의 코드 주석을 없애주세요
+# pdf 학습시키기
 # ---------------------------------------------------
 # from langchain.document_loaders import PyPDFLoader
 
@@ -90,10 +82,7 @@ llm = ChatOpenAI(temperature=0.2, model="gpt-3.5-turbo-1106")
 #     data.append(content)
 # ---------------------------------------------------
 
-
-# 세번째 구현 방법: csv 학습시키기
-# 먼저 VSCode에서 만든 이 폴더 내에 csv 파일을 업로드 해주셔야해요!
-# 사용하고 싶으면 아래 부분의 코드 주석을 없애주세요
+# csv 학습시키기
 # ---------------------------------------------------
 from langchain.document_loaders.csv_loader import CSVLoader
 
@@ -138,7 +127,7 @@ from langchain.prompts import MessagesPlaceholder
 # AI 에이전트가 사용할 프롬프트 짜주기
 system_message = SystemMessage(
     content=(
-       # "You are service agent that converts complex reading material into easy read material for mentally disabled people"
+       #"You are service agent that converts complex reading material into easy read material for mentally disabled people"
         "You are service agent for mentally disabled people"
         "If you are given a complex reading material, you will convert it easy read material."
         "If you are asked a question, you will answer in a simple manner."
@@ -248,9 +237,8 @@ def reset_processing_state():
 #     formatted_response = '\n\n'.join(sentences)
 #     return formatted_response
 
-# 웹사이트 제목
 st.title("Easy Read Generator📖")
-st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL⭐️")
+st.markdown("⭐️Ask Me Anything / Copy & Paste Difficult Text / Copy & Paste URL / Drag PDF File⭐️")
 st.markdown("🌟Easy Read Material for Everyone😌")
 
 st.image('easyread.jpeg') 
@@ -292,11 +280,10 @@ if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file
     except Exception as e:
         st.error(f"An error occurred while processing the PDF: {e}")
 
-
+# Save the file uploaded locally 
 # uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 # pdf_text = None 
 # if uploaded_file is not None: 
-#     # Save the file locally
 #     with open("temp_pdf_file.pdf", "wb") as f:
 #         f.write(uploaded_file.getbuffer())
 #     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
