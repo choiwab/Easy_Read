@@ -271,15 +271,6 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
-# pdf_text = None 
-# if uploaded_file is not None: 
-#     # Save the file locally
-#     with open("temp_pdf_file.pdf", "wb") as f:
-#         f.write(uploaded_file.getbuffer())
-#     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
-
-
 # Initialize session state variables if they don't exist
 if 'file_processed' not in st.session_state:
     st.session_state.file_processed = False
@@ -294,36 +285,14 @@ if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file
     st.session_state.uploaded_file = uploaded_file
     st.session_state.file_processed = False
 
-if uploaded_file is not None: 
-    # Use a PDF processing library to read from the file-like object
-    try:
-        reader = PdfReader(uploaded_file)
-        pdf_text = ''
-        for page in reader.pages:
-            pdf_text += page.extract_text() + '\n'
-    except Exception as e:
-        st.error(f"An error occurred while processing the PDF: {e}")
-
-# if 'last_processed_input' not in st.session_state:
-#     st.session_state.last_processed_input = None
-#     st.session_state.generated_text = None
-#     st.session_state.generated_image_url = None
 
 # uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
-
-# if uploaded_file is not None:
-#     # Read the uploaded file
-#     pdf_text = extract_text_from_pdf(uploaded_file)
-
-#     # Check if the input has changed
-#     if pdf_text != st.session_state.last_processed_input:
-#         # Process the new input
-#         processed_text, image_url = process_input_with_llm(pdf_text) 
-        
-#         # Update session state
-#         st.session_state.last_processed_input = pdf_text
-#         st.session_state.generated_text = processed_text
-#         st.session_state.generated_image_url = image_url
+# pdf_text = None 
+# if uploaded_file is not None: 
+#     # Save the file locally
+#     with open("temp_pdf_file.pdf", "wb") as f:
+#         f.write(uploaded_file.getbuffer())
+#     pdf_text = extract_text_from_pdf("temp_pdf_file.pdf")
 
 
 user_input = st.chat_input("Enter text/URL")
@@ -371,9 +340,15 @@ if prompt:
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
         if uploaded_file is not None and not st.session_state.file_processed:
-            pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
-            st.session_state.file_processed = True
-
+            try:
+                reader = PdfReader(uploaded_file)
+                pdf_text = ''
+                for page in reader.pages:
+                    pdf_text += page.extract_text() + '\n'
+            except Exception as e:
+                st.error(f"An error occurred while processing the PDF: {e}")
+                pdf_file = create_pdf(full_response, image_url) # Replace with your image path 
+                st.session_state.file_processed = True
             with open(pdf_file, "rb") as file:
                 st.download_button(
                 label="Download PDF",
@@ -383,3 +358,12 @@ if prompt:
                 on_click=reset_processing_state
         )
  
+# if uploaded_file is not None and not st.session_state.file_processed: 
+#     # Use a PDF processing library to read from the file-like object
+#     try:
+#         reader = PdfReader(uploaded_file)
+#         pdf_text = ''
+#         for page in reader.pages:
+#             pdf_text += page.extract_text() + '\n'
+#     except Exception as e:
+#         st.error(f"An error occurred while processing the PDF: {e}")
