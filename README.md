@@ -17,7 +17,7 @@ Welcome to the **Easy Read Generator**! 🚀 This innovative project is all abou
 - **Check it out here:** [Easy Read Generator](https://easyread-mpmn4dn5gvyu77x6k6nqq5.streamlit.app/) (Note: OpenAI API Key required)
 
 ## 💖 Background and Mission
-I am passionate about using technology for social good! Our mission is to make information more accessible and understandable for mentally disabled patients. Join me in spreading knowledge and awareness!
+I am passionate about using technology for social good! My mission is to make information more accessible and understandable for mentally disabled patients. Join me in spreading knowledge and awareness!
 
 ## 🤝 How to Contribute
 Your ideas and contributions are welcome! 🌟 Whether it's a suggestion, bug fix, or a feature enhancement, your input can make a huge difference in the lives of many. Let's innovate together for a more inclusive world!
