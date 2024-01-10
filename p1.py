@@ -284,14 +284,12 @@ pdf_text = None
 if uploaded_file is not None and uploaded_file != st.session_state.uploaded_file:
     st.session_state.uploaded_file = uploaded_file
     st.session_state.file_processed = False
-
-
-try:
+    try:
         reader = PdfReader(uploaded_file)
         pdf_text = ''
         for page in reader.pages:
             pdf_text += page.extract_text() + '\n'
-except Exception as e:
+    except Exception as e:
         st.error(f"An error occurred while processing the PDF: {e}")
 
 
@@ -325,7 +323,7 @@ if prompt:
 # AI가 보낸 답변이면 AI 아이콘이랑 LLM 실행시켜서 답변 받고 스트리밍해서 보여주기
      with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        full_response = ""
+        full_response = "" 
         result = agent_executor({"input": prompt})
 
         for chunk in result["output"].split():
