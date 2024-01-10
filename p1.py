@@ -231,6 +231,8 @@ def reset_processing_state():
     # Reset the processing state for a new upload
     st.session_state.file_processed = False
     st.session_state.uploaded_file = None
+    st.session_state.pop('file_uploader', None)
+
 
 # def format_response(text):
 #     sentences = sent_tokenize(text)
@@ -344,5 +346,4 @@ if prompt:
                 mime="application/octet-stream",
                 on_click=reset_processing_state
         )
-        st.session_state.pop('file_uploader', None)
  
